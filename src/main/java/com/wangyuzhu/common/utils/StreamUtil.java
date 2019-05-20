@@ -9,6 +9,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.HashSet;
+import java.util.Set;
 
 public class StreamUtil {
 
@@ -20,34 +22,32 @@ public class StreamUtil {
 		return null;
 	}
 	
-	public static String readTextFile(File txtFile){
-		return null;
-	}
 	
+	//获取内容写入文件
+    public static  Set<String> readFile(File srcFile){
+    	
+    	Set<String> set = new HashSet<>();
+    	  FileInputStream fileInputStream = null;
+          InputStreamReader inputStreamReader = null;
+          BufferedReader bufferedReader = null;
+          FileWriter fileWriter = null;
+          BufferedWriter bufferedWriter = null;
+          try {
+              fileInputStream = new FileInputStream(srcFile);
+              inputStreamReader = new InputStreamReader(fileInputStream);
+              bufferedReader = new BufferedReader(inputStreamReader);
+         
+              String data = null;
+              while ((data = bufferedReader.readLine()) != null){
+            	  set.add(data);
+              }
+          } catch (FileNotFoundException e) {
+              e.printStackTrace();
+          } catch (IOException e) {
+              e.printStackTrace();
+          }	
+          
+          return set;
+    }
 	
-	//获取文件内容写入文件
-	public static void readAndWriteFile(File srcFile,File destFile){
-		FileInputStream fileInputStream = null;
-	    InputStreamReader inputStreamReader = null;
-	    BufferedWriter bufferedWriter = null;
-	    BufferedReader bufferedReader = null;
-	    FileWriter fileWriter = null;
-	    try {
-	    	fileInputStream = new FileInputStream(srcFile);
-	        inputStreamReader = new InputStreamReader(fileInputStream);
-	        bufferedReader = new BufferedReader(inputStreamReader);
-	        fileWriter = new FileWriter(destFile);
-	        bufferedWriter = new BufferedWriter(fileWriter);
-	        String data = null;
-	        while ((data = bufferedReader.readLine()) != null){
-	        	bufferedWriter.write(data);
-	            bufferedWriter.newLine();
-	            bufferedWriter.flush();
-	        }
-	    } catch (FileNotFoundException e) {
-	        e.printStackTrace();
-	    } catch (IOException e) {
-	        e.printStackTrace();
-	    	}
-	    }
 }
